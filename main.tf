@@ -69,15 +69,15 @@ resource "sysdig_monitor_alert_metric" "logstash_up" {
 }
 
 resource "sysdig_monitor_alert_metric" "logstash_pipeline_events_out" {
-    name = "[Logstash] ${var.cluster_name}-${var.statefulset_name}-logstash_pipeline_events_out"
-    description = "test"
-    severity = 6
+  name        = "[Logstash] ${var.cluster_name}-${var.statefulset_name}-logstash_pipeline_events_out"
+  description = "test"
+  severity    = 6
 
-    #metric = "sum(rateOfChange(logstash_pipeline_events_out)) < 5"
-    metric = "rateOfChange(sum(avg(logstash_pipeline_events_out))) > 1"
-    trigger_after_minutes = 1
+  #metric = "sum(rateOfChange(logstash_pipeline_events_out)) < 5"
+  metric                = "rateOfChange(sum(avg(logstash_pipeline_events_out))) > 0 AND rateOfChange(sum(avg(logstash_pipeline_events_out))) < 2000 AND rateOfChange(sum(avg(logstash_pipeline_events_out))) = 0"
+  trigger_after_minutes = 1
 
-    scope = "kubernetes.cluster.name = '${var.cluster_name}' and kubernetes.namespace.name = '${var.namespace_name}' and kubernetes.statefulSet.name = '${var.statefulset_name}'"
+  scope = "kubernetes.cluster.name = '${var.cluster_name}' and kubernetes.namespace.name = '${var.namespace_name}' and kubernetes.statefulSet.name = '${var.statefulset_name}'"
 
-    notification_channels = [306]
+  notification_channels = [306]
 }
