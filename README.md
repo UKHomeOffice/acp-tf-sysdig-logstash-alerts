@@ -1,4 +1,7 @@
 # acp-tf-sysdig-logstash-alerts
+
+Terraform module to create Sysdig alerts for Logstash 
+
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
 

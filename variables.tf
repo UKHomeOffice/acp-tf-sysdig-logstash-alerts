@@ -56,3 +56,20 @@ variable "alert_logstash_up_default_disabled" {
   default = false
   description = "Toggle to disable default logstash_up"
 }
+
+variable "alerts_logstash_pipeline_events_out" {
+  type = list(object({
+    suffix                = string
+    trigger_after_minutes = number
+    channels              = list(number)
+    threshold             = string
+  }))
+  default = []
+  description = "List of custom logstash_pipeline_events_out prometheus alerts"
+}
+
+variable "alert_logstash_pipeline_events_default_disabled" {
+  type    = bool
+  default = false
+  description = "Toggle to disable default logstash_pipeline_events_out alerts"
+}
