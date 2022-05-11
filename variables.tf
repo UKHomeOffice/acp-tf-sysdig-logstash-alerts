@@ -13,7 +13,7 @@ variable "statefulset_name" {
   description = "kubernetes.statefulSet.name used in alert scope"
 }
 
-variable "default_pager_notification_channels" {
+variable "default_critical_notification_channels" {
   type        = list(number)
   description = "Warning notification channels used in default alerts"
 }

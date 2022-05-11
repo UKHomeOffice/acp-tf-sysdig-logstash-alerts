@@ -6,7 +6,7 @@ locals {
         suffix                = "pager"
         threshold             = "1"
         trigger_after_minutes = 60
-        channels              = var.default_pager_notification_channels
+        channels              = var.default_critical_notification_channels
       },
       {
         suffix                = "warning"
@@ -21,7 +21,7 @@ locals {
         suffix                = "pager"
         threshold             = "1"
         trigger_after_minutes = 60
-        channels              = var.default_pager_notification_channels
+        channels              = var.default_critical_notification_channels
       },
       {
         suffix                = "warning"
@@ -36,7 +36,7 @@ locals {
         suffix                = "pager"
         threshold             = "1"
         trigger_after_minutes = 60
-        channels              = var.default_pager_notification_channels
+        channels              = var.default_critical_notification_channels
       },
       {
         suffix                = "warning"
