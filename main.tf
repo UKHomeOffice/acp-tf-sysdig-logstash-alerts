@@ -100,7 +100,7 @@ resource "sysdig_monitor_alert_metric" "logstash_pipeline_events_out" {
 
   //There is a issue in Sysdig where the formula structure GroupAggegration(TimeAggregation(metric)) isn't valid for alerts. instead of formula: sum(rateOfChange(logstash_pipeline_events_out)) it is rateOfChange(sum(avg(logstash_pipeline_events_out)))
   metric                = "rateOfChange(sum(avg(logstash_pipeline_events_out))) >= 0 AND rateOfChange(sum(avg(logstash_pipeline_events_out))) < ${each.value.threshold}"
-  trigger_after_minutes = 1
+  trigger_after_minutes = each.value.trigger_after_minutes
   scope                 = "kubernetes.cluster.name = '${var.cluster_name}' and kubernetes.namespace.name = '${var.namespace_name}' and kubernetes.statefulSet.name = '${var.statefulset_name}'"
 
   notification_channels = each.value.channels
