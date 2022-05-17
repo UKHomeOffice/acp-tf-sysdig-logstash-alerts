@@ -4,13 +4,13 @@ locals {
     pod_not_ready = [
       {
         suffix                = "pager"
-        threshold             = "1"
+        threshold             = "0.3"
         trigger_after_minutes = 60
         channels              = var.default_critical_notification_channels
       },
       {
         suffix                = "warning"
-        threshold             = "1"
+        threshold             = "0.3"
         trigger_after_minutes = 15
         channels              = var.default_warning_notification_channels
       }
@@ -19,13 +19,13 @@ locals {
     logstash_up = [
       {
         suffix                = "pager"
-        threshold             = "1"
+        threshold             = "0.3"
         trigger_after_minutes = 60
         channels              = var.default_critical_notification_channels
       },
       {
         suffix                = "warning"
-        threshold             = "1"
+        threshold             = "0.3"
         trigger_after_minutes = 15
         channels              = var.default_warning_notification_channels
       }
@@ -64,7 +64,7 @@ resource "sysdig_monitor_alert_metric" "pod_not_ready" {
   description = "A Logstash pod is not in a ready state for ${each.value.trigger_after_minutes} minutes in cluster: ${var.cluster_name}, statefulset name: ${var.statefulset_name}"
   severity    = 3
 
-  metric                = "avg(max(kubernetes.pod.status.ready)) < ${each.value.threshold}"
+  metric                = "max(max(kubernetes.pod.status.ready)) < ${each.value.threshold}"
   trigger_after_minutes = each.value.trigger_after_minutes
   scope                 = "kubernetes.cluster.name = '${var.cluster_name}' and kubernetes.namespace.name = '${var.namespace_name}' and kubernetes.statefulSet.name = '${var.statefulset_name}'"
   multiple_alerts_by    = ["kubernetes.pod.name"]
@@ -81,7 +81,7 @@ resource "sysdig_monitor_alert_metric" "logstash_up" {
   description = "A Logstash container is reporting it is not up for ${each.value.trigger_after_minutes} minutes in cluster: ${var.cluster_name}, statefulset name: ${var.statefulset_name}"
   severity    = 3
 
-  metric                = "avg(max(logstash_up)) < ${each.value.threshold}"
+  metric                = "max(max(logstash_up)) < ${each.value.threshold}"
   trigger_after_minutes = each.value.trigger_after_minutes
   scope                 = "kubernetes.cluster.name = '${var.cluster_name}' and kubernetes.namespace.name = '${var.namespace_name}' and kubernetes.statefulSet.name = '${var.statefulset_name}'"
   multiple_alerts_by    = ["kubernetes.pod.name"]
